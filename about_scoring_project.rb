@@ -30,22 +30,16 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # Your goal is to write the score method.
 
 def score(dice)
-  
-  score = 0
+  single_score = { 1 => 100, 5 => 50}
   # Since 1 and 5 are counted individually they get a modified triple score
   triple_score = { 1 => 700, 2 => 200, 3 => 300, 4 => 400, 5 => 350, 6 => 600}
   number_counts = {}
   (1..6).each {|val| number_counts[val] = 0 }
-  dice.each do |die|
+  score = dice.inject(0) do |score, die|
     number_counts[die] += 1
-    if die == 1
-      score += 100
-    elsif die == 5
-      score += 50
-    end
+    score + single_score.fetch(die,0)
   end
-
-  number_counts.inject(score) { |result, (key, count)| score += (count / 3) * triple_score[key] }
+  number_counts.inject(score) { |score, (key, count)| score + (count / 3) * triple_score[key] }
 end
 
 class AboutScoringProject < Neo::Koan
