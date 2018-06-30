@@ -45,8 +45,7 @@ def score(dice)
     end
   end
 
-  number_counts.each { |key, count| score += (count / 3) * triple_score[key] }
-  score
+  number_counts.inject(score) { |result, (key, count)| score += (count / 3) * triple_score[key] }
 end
 
 class AboutScoringProject < Neo::Koan
