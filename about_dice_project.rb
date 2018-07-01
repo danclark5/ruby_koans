@@ -1,5 +1,15 @@
 require File.expand_path(File.dirname(__FILE__) + '/neo')
 
+class DiceSet
+  attr_reader :values
+  def roll(die_count)
+    @values = []
+    (1..die_count).map do |n|
+      @values << Random.rand(6) + 1
+    end
+  end
+
+end
 # Implement a DiceSet Class here:
 #
 # class DiceSet
