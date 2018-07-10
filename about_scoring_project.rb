@@ -31,14 +31,14 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 def score(dice)
   single_score = { 1 => 100, 5 => 50}
-  # Since 1 and 5 are counted individually they get a modified triple score
   triple_score = { 1 => 700, 2 => 200, 3 => 300, 4 => 400, 5 => 350, 6 => 600}
-  number_counts = {}
-  (1..6).each {|val| number_counts[val] = 0 }
+  number_counts = { 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0 }
+
   score = dice.inject(0) do |score, die|
     number_counts[die] += 1
-    score + single_score.fetch(die,0)
+    score + single_score.fetch(die, 0)
   end
+
   number_counts.inject(score) { |score, (key, count)| score + (count / 3) * triple_score[key] }
 end
 
